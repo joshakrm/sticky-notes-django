@@ -1,0 +1,21 @@
+<!-- notes/templates/notes/note_detail.html -->
+{% extends "base.html" %}
+
+{% block title %}Sticky Notes – {{ note.title }}{% endblock %}
+
+{% block content %}
+    <article class="note-detail">
+        <h2>{{ note.title }}</h2>
+        <p class="note-content">{{ note.content|linebreaks }}</p>
+        <small>
+            Created: {{ note.created_at|date:"M d, Y H:i" }}<br>
+            Updated: {{ note.updated_at|date:"M d, Y H:i" }}
+        </small>
+    </article>
+
+    <div class="actions">
+        <a class="btn" href="{% url 'notes:note_update' pk=note.pk %}">Edit</a>
+        <a class="btn btn-danger" href="{% url 'notes:note_delete' pk=note.pk %}">Delete</a>
+        <a class="btn" href="{% url 'notes:note_list' %}">Back to List</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+# .gitignore
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+staticfiles/
+.env
+.idea/
+.vscode/
+.DS_Store

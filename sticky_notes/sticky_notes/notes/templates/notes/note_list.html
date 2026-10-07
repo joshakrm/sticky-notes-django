@@ -1,0 +1,28 @@
+<!-- notes/templates/notes/note_list.html -->
+{% extends "base.html" %}
+
+{% block title %}Sticky Notes – {{ page_title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ page_title }}</h2>
+
+    <a class="btn btn-primary" href="{% url 'notes:note_create' %}">+ Add Note</a>
+
+    {% if notes %}
+        <ul class="note-list">
+            {% for note in notes %}
+                <li class="note-card">
+                    <h3>
+                        <a href="{% url 'notes:note_detail' pk=note.pk %}">
+                            {{ note.title }}
+                        </a>
+                    </h3>
+                    <p>{{ note.content|truncatewords:20 }}</p>
+                    <small>Created: {{ note.created_at|date:"M d, Y H:i" }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notes yet. <a href="{% url 'notes:note_create' %}">Create one</a>.</p>
+    {% endif %}
+{% endblock %}

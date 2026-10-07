@@ -1,0 +1,15 @@
+<!-- notes/templates/notes/note_form.html -->
+{% extends "base.html" %}
+
+{% block title %}Sticky Notes – {{ page_title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ page_title }}</h2>
+
+    <form method="post" class="note-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn" href="{% url 'notes:note_list' %}">Cancel</a>
+    </form>
+{% endblock %}
