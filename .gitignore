@@ -1,0 +1,17 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments and local secrets
+.venv/
+venv/
+env/
+.env
+
+# Local Django database and uploaded media
+*.sqlite3
+media/
+
+# Collected static assets
+/sticky_notes/staticfiles/

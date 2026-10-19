@@ -163,6 +163,11 @@ class NoteFormTest(TestCase):
 class NoteURLTest(TestCase):
     """Tests for URL patterns."""
 
+    def test_home_url_redirects_to_note_list(self):
+        """The project home page should lead to the notes list."""
+        response = self.client.get(reverse("home"))
+        self.assertRedirects(response, reverse("notes:note_list"))
+
     def test_note_list_url_resolves(self):
         """The list URL should resolve to the correct view."""
         self.assertEqual(reverse("notes:note_list"), "/notes/")
