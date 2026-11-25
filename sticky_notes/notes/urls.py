@@ -1,4 +1,14 @@
-# notes/urls.py
+"""URL patterns for the notes app.
+
+All routes are namespaced under ``notes`` and are mounted at ``/notes/``
+by the project URL configuration:
+
+* ``""`` -- list all notes (``notes:note_list``)
+* ``note/new/`` -- create a note (``notes:note_create``)
+* ``note/<pk>/`` -- show one note (``notes:note_detail``)
+* ``note/<pk>/edit/`` -- edit a note (``notes:note_update``)
+* ``note/<pk>/delete/`` -- delete a note (``notes:note_delete``)
+"""
 from django.urls import path
 from . import views
 
