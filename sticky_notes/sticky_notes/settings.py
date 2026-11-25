@@ -34,6 +34,11 @@ ALLOWED_HOSTS = env_list(
     "DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"]
 )
 
+# Origins that are trusted for form submissions, for example
+# "https://example.com". Needed when the app runs behind an HTTPS proxy,
+# such as the Docker playground.
+CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS", default=[])
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

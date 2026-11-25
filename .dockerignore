@@ -1,0 +1,15 @@
+# Keep the build context small and keep local files out of the image.
+.git
+.gitignore
+.venv/
+venv/
+env/
+.env
+.env.*
+**/__pycache__/
+**/*.py[cod]
+**/*.sqlite3
+**/staticfiles/
+docs/
+diagrams/
+*.md
