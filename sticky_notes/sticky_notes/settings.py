@@ -6,6 +6,8 @@ variables so that no secrets are stored in the repository:
 * ``DJANGO_SECRET_KEY`` -- the secret key used for cryptographic signing.
 * ``DJANGO_DEBUG`` -- ``True`` or ``False`` (defaults to ``True``).
 * ``DJANGO_ALLOWED_HOSTS`` -- comma-separated list of allowed host names.
+* ``DJANGO_CSRF_TRUSTED_ORIGINS`` -- optional comma-separated list of
+  origins trusted for form submissions behind an HTTPS proxy.
 """
 import os
 from pathlib import Path
