@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>notes.views &mdash; Sticky Notes 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Sticky Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Using the application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notes.html">The <code class="docutils literal notranslate"><span class="pre">notes</span></code> app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project.html">The <code class="docutils literal notranslate"><span class="pre">sticky_notes</span></code> project</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Sticky Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">notes.views</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for notes.views</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Views for the notes app.</span>
+
+<span class="sd">Each view handles one step of the create, read, update and delete</span>
+<span class="sd">(CRUD) workflow for :class:`~notes.models.Note` objects and renders a</span>
+<span class="sd">template from ``notes/templates/notes``.</span>
+<span class="sd">"""</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">get_object_or_404</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">HttpResponse</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Note</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoteForm</span>
+
+
+<div class="viewcode-block" id="note_list">
+<a class="viewcode-back" href="../../notes.html#notes.views.note_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">note_list</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Display a list of all sticky notes.</span>
+
+<span class="sd">    :param request: The incoming HTTP request.</span>
+<span class="sd">    :type request: django.http.HttpRequest</span>
+<span class="sd">    :returns: The rendered ``notes/note_list.html`` page.</span>
+<span class="sd">    :rtype: django.http.HttpResponse</span>
+<span class="sd">    """</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="n">Note</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"notes"</span><span class="p">:</span> <span class="n">notes</span><span class="p">,</span>
+        <span class="s2">"page_title"</span><span class="p">:</span> <span class="s2">"All Notes"</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"notes/note_list.html"</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="note_detail">
+<a class="viewcode-back" href="../../notes.html#notes.views.note_detail">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">note_detail</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">pk</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Display the details of a single note.</span>
+
+<span class="sd">    :param request: The incoming HTTP request.</span>
+<span class="sd">    :type request: django.http.HttpRequest</span>
+<span class="sd">    :param pk: Primary key of the note to display.</span>
+<span class="sd">    :type pk: int</span>
+<span class="sd">    :returns: The rendered ``notes/note_detail.html`` page.</span>
+<span class="sd">    :rtype: django.http.HttpResponse</span>
+<span class="sd">    :raises django.http.Http404: If no note with the given ``pk`` exists.</span>
+<span class="sd">    """</span>
+    <span class="n">note</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Note</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"note"</span><span class="p">:</span> <span class="n">note</span><span class="p">,</span>
+        <span class="s2">"page_title"</span><span class="p">:</span> <span class="n">note</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"notes/note_detail.html"</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="note_create">
+<a class="viewcode-back" href="../../notes.html#notes.views.note_create">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">note_create</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create a new sticky note.</span>
+
+<span class="sd">    A ``GET`` request shows an empty form. A ``POST`` request validates</span>
+<span class="sd">    the submitted data and, if it is valid, saves the note and redirects</span>
+<span class="sd">    to its detail page. Invalid data re-displays the form with errors.</span>
+
+<span class="sd">    :param request: The incoming HTTP request.</span>
+<span class="sd">    :type request: django.http.HttpRequest</span>
+<span class="sd">    :returns: The rendered form, or a redirect to the new note.</span>
+<span class="sd">    :rtype: django.http.HttpResponse</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">"POST"</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">NoteForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">note</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">"notes:note_detail"</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">NoteForm</span><span class="p">()</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"form"</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+        <span class="s2">"page_title"</span><span class="p">:</span> <span class="s2">"Create Note"</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"notes/note_form.html"</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="note_update">
+<a class="viewcode-back" href="../../notes.html#notes.views.note_update">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">note_update</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">pk</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Update an existing sticky note.</span>
+
+<span class="sd">    A ``GET`` request shows the form pre-filled with the note's current</span>
+<span class="sd">    values. A valid ``POST`` request saves the changes and redirects to</span>
+<span class="sd">    the note's detail page.</span>
+
+<span class="sd">    :param request: The incoming HTTP request.</span>
+<span class="sd">    :type request: django.http.HttpRequest</span>
+<span class="sd">    :param pk: Primary key of the note to edit.</span>
+<span class="sd">    :type pk: int</span>
+<span class="sd">    :returns: The rendered form, or a redirect to the updated note.</span>
+<span class="sd">    :rtype: django.http.HttpResponse</span>
+<span class="sd">    :raises django.http.Http404: If no note with the given ``pk`` exists.</span>
+<span class="sd">    """</span>
+    <span class="n">note</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Note</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">"POST"</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">NoteForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">note</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">"notes:note_detail"</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">NoteForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">note</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"form"</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+        <span class="s2">"note"</span><span class="p">:</span> <span class="n">note</span><span class="p">,</span>
+        <span class="s2">"page_title"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Edit: </span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"notes/note_form.html"</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="note_delete">
+<a class="viewcode-back" href="../../notes.html#notes.views.note_delete">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">note_delete</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">pk</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Delete a sticky note after confirmation.</span>
+
+<span class="sd">    A ``GET`` request shows a confirmation page. Only a ``POST`` request</span>
+<span class="sd">    deletes the note, after which the user is sent back to the note list.</span>
+
+<span class="sd">    :param request: The incoming HTTP request.</span>
+<span class="sd">    :type request: django.http.HttpRequest</span>
+<span class="sd">    :param pk: Primary key of the note to delete.</span>
+<span class="sd">    :type pk: int</span>
+<span class="sd">    :returns: The confirmation page, or a redirect to the note list.</span>
+<span class="sd">    :rtype: django.http.HttpResponse</span>
+<span class="sd">    :raises django.http.Http404: If no note with the given ``pk`` exists.</span>
+<span class="sd">    """</span>
+    <span class="n">note</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Note</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">"POST"</span><span class="p">:</span>
+        <span class="n">note</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">"notes:note_list"</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"note"</span><span class="p">:</span> <span class="n">note</span><span class="p">,</span>
+        <span class="s2">"page_title"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Delete: </span><span class="si">{</span><span class="n">note</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"notes/note_confirm_delete.html"</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Joshua.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

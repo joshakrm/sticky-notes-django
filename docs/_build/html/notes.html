@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The notes app &mdash; Sticky Notes 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The sticky_notes project" href="project.html" />
+    <link rel="prev" title="Using the application" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Sticky Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Using the application</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The <code class="docutils literal notranslate"><span class="pre">notes</span></code> app</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-notes.models">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notes.models.Note"><code class="docutils literal notranslate"><span class="pre">Note</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#notes.models.Note.get_absolute_url"><code class="docutils literal notranslate"><span class="pre">Note.get_absolute_url()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-notes.views">Views</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notes.views.note_list"><code class="docutils literal notranslate"><span class="pre">note_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes.views.note_detail"><code class="docutils literal notranslate"><span class="pre">note_detail()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes.views.note_create"><code class="docutils literal notranslate"><span class="pre">note_create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes.views.note_update"><code class="docutils literal notranslate"><span class="pre">note_update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes.views.note_delete"><code class="docutils literal notranslate"><span class="pre">note_delete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-notes.forms">Forms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notes.forms.NoteForm"><code class="docutils literal notranslate"><span class="pre">NoteForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#notes.forms.NoteForm.Meta"><code class="docutils literal notranslate"><span class="pre">NoteForm.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes.forms.NoteForm.media"><code class="docutils literal notranslate"><span class="pre">NoteForm.media</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-notes.admin">Admin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notes.admin.NoteAdmin"><code class="docutils literal notranslate"><span class="pre">NoteAdmin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-notes.urls">URL patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-notes.apps">App configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#notes.apps.NotesConfig"><code class="docutils literal notranslate"><span class="pre">NotesConfig</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">The <code class="docutils literal notranslate"><span class="pre">sticky_notes</span></code> project</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sticky Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The <code class="docutils literal notranslate"><span class="pre">notes</span></code> app</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/notes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-notes-app">
+<h1>The <code class="docutils literal notranslate"><span class="pre">notes</span></code> app<a class="headerlink" href="#the-notes-app" title="Link to this heading"></a></h1>
+<section id="module-notes.models">
+<span id="models"></span><h2>Models<a class="headerlink" href="#module-notes.models" title="Link to this heading"></a></h2>
+<p>Database models for the notes app.</p>
+<p>The app stores a single kind of object, <a class="reference internal" href="#notes.models.Note" title="notes.models.Note"><code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code></a>, which represents
+one sticky note on the board.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="notes.models.Note">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">notes.models.</span></span><span class="sig-name descname"><span class="pre">Note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notes/models.html#Note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.models.Note" title="Link to this definition"></a></dt>
+<dd><p>A single sticky note.</p>
+<p>Notes are ordered newest first by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> – Short title of the note (maximum 255 characters).</p></li>
+<li><p><strong>content</strong> – Body text of the note.</p></li>
+<li><p><strong>created_at</strong> – Date and time the note was created. Set
+automatically when the note is first saved.</p></li>
+<li><p><strong>updated_at</strong> – Date and time the note was last modified. Updated
+automatically on every save.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="notes.models.Note.get_absolute_url">
+<span class="sig-name descname"><span class="pre">get_absolute_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/notes/models.html#Note.get_absolute_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.models.Note.get_absolute_url" title="Link to this definition"></a></dt>
+<dd><p>Return the canonical URL for this note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The path of the note’s detail page, for example
+<code class="docutils literal notranslate"><span class="pre">/notes/note/1/</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-notes.views">
+<span id="views"></span><h2>Views<a class="headerlink" href="#module-notes.views" title="Link to this heading"></a></h2>
+<p>Views for the notes app.</p>
+<p>Each view handles one step of the create, read, update and delete
+(CRUD) workflow for <a class="reference internal" href="#notes.models.Note" title="notes.models.Note"><code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code></a> objects and renders a
+template from <code class="docutils literal notranslate"><span class="pre">notes/templates/notes</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="notes.views.note_list">
+<span class="sig-prename descclassname"><span class="pre">notes.views.</span></span><span class="sig-name descname"><span class="pre">note_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">HttpRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">HttpResponse</span></span></span><a class="reference internal" href="_modules/notes/views.html#note_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.views.note_list" title="Link to this definition"></a></dt>
+<dd><p>Display a list of all sticky notes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>django.http.HttpRequest</em>) – The incoming HTTP request.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rendered <code class="docutils literal notranslate"><span class="pre">notes/note_list.html</span></code> page.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>django.http.HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="notes.views.note_detail">
+<span class="sig-prename descclassname"><span class="pre">notes.views.</span></span><span class="sig-name descname"><span class="pre">note_detail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">HttpRequest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">HttpResponse</span></span></span><a class="reference internal" href="_modules/notes/views.html#note_detail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.views.note_detail" title="Link to this definition"></a></dt>
+<dd><p>Display the details of a single note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>django.http.HttpRequest</em>) – The incoming HTTP request.</p></li>
+<li><p><strong>pk</strong> (<em>int</em>) – Primary key of the note to display.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rendered <code class="docutils literal notranslate"><span class="pre">notes/note_detail.html</span></code> page.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>django.http.HttpResponse</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>django.http.Http404</strong> – If no note with the given <code class="docutils literal notranslate"><span class="pre">pk</span></code> exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="notes.views.note_create">
+<span class="sig-prename descclassname"><span class="pre">notes.views.</span></span><span class="sig-name descname"><span class="pre">note_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">HttpRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">HttpResponse</span></span></span><a class="reference internal" href="_modules/notes/views.html#note_create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.views.note_create" title="Link to this definition"></a></dt>
+<dd><p>Create a new sticky note.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">GET</span></code> request shows an empty form. A <code class="docutils literal notranslate"><span class="pre">POST</span></code> request validates
+the submitted data and, if it is valid, saves the note and redirects
+to its detail page. Invalid data re-displays the form with errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>django.http.HttpRequest</em>) – The incoming HTTP request.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rendered form, or a redirect to the new note.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>django.http.HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="notes.views.note_update">
+<span class="sig-prename descclassname"><span class="pre">notes.views.</span></span><span class="sig-name descname"><span class="pre">note_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">HttpRequest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">HttpResponse</span></span></span><a class="reference internal" href="_modules/notes/views.html#note_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.views.note_update" title="Link to this definition"></a></dt>
+<dd><p>Update an existing sticky note.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">GET</span></code> request shows the form pre-filled with the note’s current
+values. A valid <code class="docutils literal notranslate"><span class="pre">POST</span></code> request saves the changes and redirects to
+the note’s detail page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>django.http.HttpRequest</em>) – The incoming HTTP request.</p></li>
+<li><p><strong>pk</strong> (<em>int</em>) – Primary key of the note to edit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rendered form, or a redirect to the updated note.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>django.http.HttpResponse</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>django.http.Http404</strong> – If no note with the given <code class="docutils literal notranslate"><span class="pre">pk</span></code> exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="notes.views.note_delete">
+<span class="sig-prename descclassname"><span class="pre">notes.views.</span></span><span class="sig-name descname"><span class="pre">note_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">HttpRequest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">HttpResponse</span></span></span><a class="reference internal" href="_modules/notes/views.html#note_delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.views.note_delete" title="Link to this definition"></a></dt>
+<dd><p>Delete a sticky note after confirmation.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">GET</span></code> request shows a confirmation page. Only a <code class="docutils literal notranslate"><span class="pre">POST</span></code> request
+deletes the note, after which the user is sent back to the note list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>django.http.HttpRequest</em>) – The incoming HTTP request.</p></li>
+<li><p><strong>pk</strong> (<em>int</em>) – Primary key of the note to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The confirmation page, or a redirect to the note list.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>django.http.HttpResponse</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>django.http.Http404</strong> – If no note with the given <code class="docutils literal notranslate"><span class="pre">pk</span></code> exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-notes.forms">
+<span id="forms"></span><h2>Forms<a class="headerlink" href="#module-notes.forms" title="Link to this heading"></a></h2>
+<p>Forms for the notes app.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="notes.forms.NoteForm">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">notes.forms.</span></span><span class="sig-name descname"><span class="pre">NoteForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notes/forms.html#NoteForm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.forms.NoteForm" title="Link to this definition"></a></dt>
+<dd><p>Form for creating and updating <a class="reference internal" href="#notes.models.Note" title="notes.models.Note"><code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code></a> objects.</p>
+<p>The form exposes the <code class="docutils literal notranslate"><span class="pre">title</span></code> and <code class="docutils literal notranslate"><span class="pre">content</span></code> fields. Both are
+required, and the title is limited to 255 characters by the model.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="notes.forms.NoteForm.Meta">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/notes/forms.html#NoteForm.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.forms.NoteForm.Meta" title="Link to this definition"></a></dt>
+<dd><p>Bind the form to the Note model and style its widgets.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="notes.forms.NoteForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#notes.forms.NoteForm.Meta.model" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#notes.models.Note" title="notes.models.Note"><code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="notes.forms.NoteForm.media">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#notes.forms.NoteForm.media" title="Link to this definition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-notes.admin">
+<span id="admin"></span><h2>Admin<a class="headerlink" href="#module-notes.admin" title="Link to this heading"></a></h2>
+<p>Admin site configuration for the notes app.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="notes.admin.NoteAdmin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">notes.admin.</span></span><span class="sig-name descname"><span class="pre">NoteAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notes/admin.html#NoteAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.admin.NoteAdmin" title="Link to this definition"></a></dt>
+<dd><p>Admin configuration for the <a class="reference internal" href="#notes.models.Note" title="notes.models.Note"><code class="xref py py-class docutils literal notranslate"><span class="pre">Note</span></code></a> model.</p>
+<p>Shows the title and timestamps in the change list, allows searching
+by title or content, and lists the newest notes first.</p>
+</dd></dl>
+
+</section>
+<section id="module-notes.urls">
+<span id="url-patterns"></span><h2>URL patterns<a class="headerlink" href="#module-notes.urls" title="Link to this heading"></a></h2>
+<p>URL patterns for the notes app.</p>
+<p>All routes are namespaced under <code class="docutils literal notranslate"><span class="pre">notes</span></code> and are mounted at <code class="docutils literal notranslate"><span class="pre">/notes/</span></code>
+by the project URL configuration:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> – list all notes (<code class="docutils literal notranslate"><span class="pre">notes:note_list</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">note/new/</span></code> – create a note (<code class="docutils literal notranslate"><span class="pre">notes:note_create</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">note/&lt;pk&gt;/</span></code> – show one note (<code class="docutils literal notranslate"><span class="pre">notes:note_detail</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">note/&lt;pk&gt;/edit/</span></code> – edit a note (<code class="docutils literal notranslate"><span class="pre">notes:note_update</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">note/&lt;pk&gt;/delete/</span></code> – delete a note (<code class="docutils literal notranslate"><span class="pre">notes:note_delete</span></code>)</p></li>
+</ul>
+</section>
+<section id="module-notes.apps">
+<span id="app-configuration"></span><h2>App configuration<a class="headerlink" href="#module-notes.apps" title="Link to this heading"></a></h2>
+<p>Application configuration for the notes app.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="notes.apps.NotesConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">notes.apps.</span></span><span class="sig-name descname"><span class="pre">NotesConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/notes/apps.html#NotesConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#notes.apps.NotesConfig" title="Link to this definition"></a></dt>
+<dd><p>Configuration class that registers the notes app with Django.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Using the application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="project.html" class="btn btn-neutral float-right" title="The sticky_notes project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Joshua.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

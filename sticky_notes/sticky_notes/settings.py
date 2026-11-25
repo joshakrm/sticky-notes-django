@@ -1,4 +1,12 @@
-# sticky_notes/settings.py
+"""Django settings for the Sticky Notes project.
+
+Sensitive or environment-specific values are read from environment
+variables so that no secrets are stored in the repository:
+
+* ``DJANGO_SECRET_KEY`` -- the secret key used for cryptographic signing.
+* ``DJANGO_DEBUG`` -- ``True`` or ``False`` (defaults to ``True``).
+* ``DJANGO_ALLOWED_HOSTS`` -- comma-separated list of allowed host names.
+"""
 import os
 from pathlib import Path
 
@@ -82,11 +90,13 @@ DATABASES = {
     }
 }
 
+PASSWORD_VALIDATION = "django.contrib.auth.password_validation"
+
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {"NAME": f"{PASSWORD_VALIDATION}.UserAttributeSimilarityValidator"},
+    {"NAME": f"{PASSWORD_VALIDATION}.MinimumLengthValidator"},
+    {"NAME": f"{PASSWORD_VALIDATION}.CommonPasswordValidator"},
+    {"NAME": f"{PASSWORD_VALIDATION}.NumericPasswordValidator"},
 ]
 
 LANGUAGE_CODE = "en-us"

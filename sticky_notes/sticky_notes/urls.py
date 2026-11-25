@@ -1,4 +1,9 @@
-# sticky_notes/urls.py
+"""Root URL configuration for the Sticky Notes project.
+
+* ``/`` redirects to the notes list.
+* ``/admin/`` serves the Django admin site.
+* ``/notes/`` includes the routes defined in :mod:`notes.urls`.
+"""
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
