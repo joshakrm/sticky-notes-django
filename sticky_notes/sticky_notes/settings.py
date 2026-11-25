@@ -1,13 +1,38 @@
 # sticky_notes/settings.py
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-change-me-in-production"
 
-DEBUG = True
+def env_flag(name: str, default: bool) -> bool:
+    """Read a boolean setting from the environment variable ``name``."""
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
-ALLOWED_HOSTS = []
+
+def env_list(name: str, default: list[str]) -> list[str]:
+    """Read a comma-separated list from the environment variable ``name``."""
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+# The secret key is never stored in the repository. Set DJANGO_SECRET_KEY
+# in the environment (see .env.example). The fallback below is only
+# suitable for local development and running the tests.
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY", "django-insecure-local-development-only"
+)
+
+DEBUG = env_flag("DJANGO_DEBUG", default=True)
+
+ALLOWED_HOSTS = env_list(
+    "DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"]
+)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
