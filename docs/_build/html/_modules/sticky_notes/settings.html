@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sticky_notes.settings &mdash; Sticky Notes 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Sticky Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Using the application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notes.html">The <code class="docutils literal notranslate"><span class="pre">notes</span></code> app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project.html">The <code class="docutils literal notranslate"><span class="pre">sticky_notes</span></code> project</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Sticky Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sticky_notes.settings</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sticky_notes.settings</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Django settings for the Sticky Notes project.</span>
+
+<span class="sd">Sensitive or environment-specific values are read from environment</span>
+<span class="sd">variables so that no secrets are stored in the repository:</span>
+
+<span class="sd">* ``DJANGO_SECRET_KEY`` -- the secret key used for cryptographic signing.</span>
+<span class="sd">* ``DJANGO_DEBUG`` -- ``True`` or ``False`` (defaults to ``True``).</span>
+<span class="sd">* ``DJANGO_ALLOWED_HOSTS`` -- comma-separated list of allowed host names.</span>
+<span class="sd">"""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+
+<div class="viewcode-block" id="env_flag">
+<a class="viewcode-back" href="../../project.html#sticky_notes.settings.env_flag">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">env_flag</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Read a boolean setting from the environment variable ``name``."""</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+    <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"true"</span><span class="p">,</span> <span class="s2">"yes"</span><span class="p">,</span> <span class="s2">"on"</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="env_list">
+<a class="viewcode-back" href="../../project.html#sticky_notes.settings.env_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">env_list</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Read a comma-separated list from the environment variable ``name``."""</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span></div>
+
+
+
+<span class="c1"># The secret key is never stored in the repository. Set DJANGO_SECRET_KEY</span>
+<span class="c1"># in the environment (see .env.example). The fallback below is only</span>
+<span class="c1"># suitable for local development and running the tests.</span>
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s2">"DJANGO_SECRET_KEY"</span><span class="p">,</span> <span class="s2">"django-insecure-local-development-only"</span>
+<span class="p">)</span>
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="n">env_flag</span><span class="p">(</span><span class="s2">"DJANGO_DEBUG"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="n">env_list</span><span class="p">(</span>
+    <span class="s2">"DJANGO_ALLOWED_HOSTS"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s2">"localhost"</span><span class="p">,</span> <span class="s2">"127.0.0.1"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"django.contrib.admin"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.auth"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.contenttypes"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.sessions"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.messages"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.staticfiles"</span><span class="p">,</span>
+    <span class="c1"># Local apps</span>
+    <span class="s2">"notes"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"django.middleware.security.SecurityMiddleware"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.sessions.middleware.SessionMiddleware"</span><span class="p">,</span>
+    <span class="s2">"django.middleware.common.CommonMiddleware"</span><span class="p">,</span>
+    <span class="s2">"django.middleware.csrf.CsrfViewMiddleware"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.auth.middleware.AuthenticationMiddleware"</span><span class="p">,</span>
+    <span class="s2">"django.contrib.messages.middleware.MessageMiddleware"</span><span class="p">,</span>
+    <span class="s2">"django.middleware.clickjacking.XFrameOptionsMiddleware"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s2">"sticky_notes.urls"</span>
+
+<span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">"BACKEND"</span><span class="p">:</span> <span class="s2">"django.template.backends.django.DjangoTemplates"</span><span class="p">,</span>
+        <span class="s2">"DIRS"</span><span class="p">:</span> <span class="p">[</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">"templates"</span><span class="p">],</span>
+        <span class="s2">"APP_DIRS"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"OPTIONS"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"context_processors"</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">"django.template.context_processors.debug"</span><span class="p">,</span>
+                <span class="s2">"django.template.context_processors.request"</span><span class="p">,</span>
+                <span class="s2">"django.contrib.auth.context_processors.auth"</span><span class="p">,</span>
+                <span class="s2">"django.contrib.messages.context_processors.messages"</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+
+<span class="n">WSGI_APPLICATION</span> <span class="o">=</span> <span class="s2">"sticky_notes.wsgi.application"</span>
+
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"default"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"ENGINE"</span><span class="p">:</span> <span class="s2">"django.db.backends.sqlite3"</span><span class="p">,</span>
+        <span class="s2">"NAME"</span><span class="p">:</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">"db.sqlite3"</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">PASSWORD_VALIDATION</span> <span class="o">=</span> <span class="s2">"django.contrib.auth.password_validation"</span>
+
+<span class="n">AUTH_PASSWORD_VALIDATORS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"NAME"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">PASSWORD_VALIDATION</span><span class="si">}</span><span class="s2">.UserAttributeSimilarityValidator"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"NAME"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">PASSWORD_VALIDATION</span><span class="si">}</span><span class="s2">.MinimumLengthValidator"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"NAME"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">PASSWORD_VALIDATION</span><span class="si">}</span><span class="s2">.CommonPasswordValidator"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"NAME"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">PASSWORD_VALIDATION</span><span class="si">}</span><span class="s2">.NumericPasswordValidator"</span><span class="p">},</span>
+<span class="p">]</span>
+
+<span class="n">LANGUAGE_CODE</span> <span class="o">=</span> <span class="s2">"en-us"</span>
+<span class="n">TIME_ZONE</span> <span class="o">=</span> <span class="s2">"UTC"</span>
+<span class="n">USE_I18N</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">USE_TZ</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Static files</span>
+<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s2">"static/"</span>
+<span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">[</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">"notes"</span> <span class="o">/</span> <span class="s2">"static"</span><span class="p">]</span>
+<span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">"staticfiles"</span>
+
+<span class="n">DEFAULT_AUTO_FIELD</span> <span class="o">=</span> <span class="s2">"django.db.models.BigAutoField"</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Joshua.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
